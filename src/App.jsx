@@ -1,10 +1,10 @@
 import './App.css'
+import Translator from './pages/Translator';
 
 function App() {
   return (
     <>
-      Welcome
-      <button>button</button>
+      <Translator />
     </>
   );
 }
