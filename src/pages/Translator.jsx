@@ -59,17 +59,16 @@ function Translator() {
     }
 
     return (
-        <div className="w-full h-[100vh] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 py-28">
+        <div className="w-full min-h-[100vh] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 py-28">
             <section className="w-1/2 mx-auto text-center rounded ">
                 <h1 className="text-4xl font-bold">Language Translator App</h1>
-                <div className="flex justify-between py-6">
+                <div className="flex flex-col md:flex-row items-center justify-between py-6">
 
                     <TranslatorBox 
                         placeholder="Enter the text to be converted" 
                         onChange={updatedTextToBeTransLated} 
                         onLanguageSelected={handleSourceLanguage} 
                         languageCode={sourceLanguage}
-                        textValue={textToBeTranslated}
                     />
                     <img 
                         src={SwapIcon}

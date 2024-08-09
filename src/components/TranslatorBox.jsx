@@ -18,7 +18,7 @@ function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected , 
 
     return (
         <>
-            <div className="w-1/2 border rounded-md shadow-md">
+            <div className="w-full md:w-1/2 border rounded-md shadow-md">
                     <textarea
                         placeholder={placeholder}
                         onChange={handleTextChange}
