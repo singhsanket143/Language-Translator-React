@@ -10,6 +10,8 @@ function Translator() {
     const [sourceLanguage, setSourceLanguage] = useState('en-GB');
     const [destinationLanguage, setDestinationLanguage] = useState('es-ES');
 
+    const [loading, setLoading] = useState(false);
+
     const [translatedText, setTranslatedText] = useState('');
 
     function updatedTextToBeTransLated(text) {
@@ -40,12 +42,15 @@ function Translator() {
         }
 
         try {
+            setLoading(true);
             const response = await convertLanguage(sourceLanguage, destinationLanguage, textToBeTranslated);
             const translatedTextResponse = response.responseData.translatedText;
             setTranslatedText(translatedTextResponse);
         } catch (error) {
             console.log(error);
             setTranslatedText("An error occurred while translating the text");
+        } finally {
+            setLoading(false);
         }
         
     }
@@ -99,7 +104,7 @@ function Translator() {
                     onClick={handleApiCall}
                     className="w-full text-white p-2 bg-blue-500 rounded-md hover:bg-blue-600"
                 >
-                    Translate Text 
+                    {(loading) ? 'Translating text ...' : 'Translate Text'}
                 </button>
                 <button 
                     onClick={clearInput}
