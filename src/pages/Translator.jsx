@@ -16,10 +16,38 @@ function Translator() {
         setTextToBeTranslated(text);
     }
 
+    function clearInput() {
+        setTextToBeTranslated('');
+        setTranslatedText('');
+    }
+
     async function handleApiCall() {
-        const response = await convertLanguage(sourceLanguage, destinationLanguage, textToBeTranslated);
-        const translatedTextResponse = response.responseData.translatedText;
-        setTranslatedText(translatedTextResponse);
+        if(!textToBeTranslated.trim()) {
+            setTranslatedText("Input text cannot be empty");
+            return;
+        }
+        if(!sourceLanguage.trim()) {
+            setTranslatedText("Source language cannot be empty");
+            return;
+        }
+        if(!destinationLanguage.trim()) {
+            setTranslatedText("Destination language cannot be empty");
+            return;
+        }
+        if(sourceLanguage === destinationLanguage) {
+            setTranslatedText("Source and destination languages cannot be the same");
+            return;
+        }
+
+        try {
+            const response = await convertLanguage(sourceLanguage, destinationLanguage, textToBeTranslated);
+            const translatedTextResponse = response.responseData.translatedText;
+            setTranslatedText(translatedTextResponse);
+        } catch (error) {
+            console.log(error);
+            setTranslatedText("An error occurred while translating the text");
+        }
+        
     }
 
     function handleSourceLanguage(language) {
@@ -36,20 +64,36 @@ function Translator() {
                 <h1 className="text-4xl font-bold">Language Translator App</h1>
                 <div className="flex justify-between py-6">
 
-                    <TranslatorBox placeholder="Enter the text to be converted" onChange={updatedTextToBeTransLated} onLanguageSelected={handleSourceLanguage} />
+                    <TranslatorBox 
+                        placeholder="Enter the text to be converted" 
+                        onChange={updatedTextToBeTransLated} 
+                        onLanguageSelected={handleSourceLanguage} 
+                        languageCode={sourceLanguage}
+                        textValue={textToBeTranslated}
+                    />
                     <img 
                         src={SwapIcon}
                         alt="Swap icon"
                         className="my-auto cursor-pointer"
 
                     />
-                    <TranslatorBox textValue={translatedText} onLanguageSelected={handleDestinationLanguage} />
+                    <TranslatorBox 
+                        textValue={translatedText} 
+                        onLanguageSelected={handleDestinationLanguage} 
+                        languageCode={destinationLanguage}
+                    />
                 </div>
                 <button 
                     onClick={handleApiCall}
                     className="w-full text-white p-2 bg-blue-500 rounded-md hover:bg-blue-600"
                 >
                     Translate Text 
+                </button>
+                <button 
+                    onClick={clearInput}
+                    className="w-full text-white p-2 mt-2 bg-slate-500 rounded-md hover:bg-slate-600"
+                >
+                    Clear Input
                 </button>
             </section>
         </div>

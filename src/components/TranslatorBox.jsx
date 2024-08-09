@@ -3,13 +3,11 @@ import Speaker from '../assets/speaker-wave.svg'
 import languages from '../helpers/languages';
 
 
-function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected}) {
+function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected , languageCode}) {
 
-    const [text, setText] = useState('');
-    const [langaugeSelected, setLanguageSelected] = useState('en-GB');
+    const [langaugeSelected, setLanguageSelected] = useState(languageCode ?? 'en-GB');
 
     function handleTextChange(event) {
-        setText(event.target.value);
         onChange?.(event.target.value);
     }
 
@@ -18,21 +16,13 @@ function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected}) 
         onLanguageSelected?.(event.target.value);
     }
 
-    function putText() {
-        if(textValue && textValue.length > 0) {
-            return textValue;
-        } else {
-            return text;
-        }
-    }
-
     return (
         <>
             <div className="w-1/2 border rounded-md shadow-md">
                     <textarea
                         placeholder={placeholder}
                         onChange={handleTextChange}
-                        value={putText()}
+                        value={textValue}
                         className="w-full p-2 focus:outline-gray-200"
                         rows={8}
                     >
