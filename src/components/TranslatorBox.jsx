@@ -1,11 +1,38 @@
+import { useState } from 'react';
 import Speaker from '../assets/speaker-wave.svg'
+import languages from '../helpers/languages';
 
 
-function TranslatorBox() {
+function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected}) {
+
+    const [text, setText] = useState('');
+    const [langaugeSelected, setLanguageSelected] = useState('en-GB');
+
+    function handleTextChange(event) {
+        setText(event.target.value);
+        onChange?.(event.target.value);
+    }
+
+    function handleLanguageChange(event) {
+        setLanguageSelected(event.target.value);
+        onLanguageSelected?.(event.target.value);
+    }
+
+    function putText() {
+        if(textValue && textValue.length > 0) {
+            return textValue;
+        } else {
+            return text;
+        }
+    }
+
     return (
         <>
             <div className="w-1/2 border rounded-md shadow-md">
                     <textarea
+                        placeholder={placeholder}
+                        onChange={handleTextChange}
+                        value={putText()}
                         className="w-full p-2 focus:outline-gray-200"
                         rows={8}
                     >
@@ -20,14 +47,14 @@ function TranslatorBox() {
 
                         />
                         <select
+                            name="language"
+                            value={langaugeSelected}
+                            onChange={handleLanguageChange}
                             className="w-full p-1 border border-gray-200 outline-gray-500"
                         >
-                            <option>
-                                English
-                            </option>
-                            <option>
-                                French
-                            </option>
+                            {Object.entries(languages).map(([code, name]) => (
+                                <option key={code} value={code}>{name}</option>
+                            ))}
 
                         </select>
                     </div>
