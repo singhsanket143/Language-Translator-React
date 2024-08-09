@@ -3,7 +3,7 @@ import Speaker from '../assets/speaker-wave.svg'
 import languages from '../helpers/languages';
 
 
-function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected , languageCode}) {
+function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected , languageCode, handleSpeech}) {
 
 
     function handleTextChange(event) {
@@ -33,7 +33,7 @@ function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected , 
                             src={Speaker}
                             alt="speak icon"
                             className="rounded-sm cursor-pointer hover:bg-gray-100"
-
+                            onClick={() => handleSpeech?.(textValue, languageCode)}
                         />
                         <select
                             name="language"

@@ -14,6 +14,15 @@ function Translator() {
 
     const [translatedText, setTranslatedText] = useState('');
 
+    function utterText(text, language) {
+        const synth = window.speechSynthesis; // synthesis controller 
+
+        const utterance = new SpeechSynthesisUtterance(text); // create a new speech utterance
+        utterance.lang = language;
+
+        synth.speak(utterance); // trigger the speech synthesis
+    }
+
     function updatedTextToBeTransLated(text) {
         setTextToBeTranslated(text);
     }
@@ -86,6 +95,7 @@ function Translator() {
                         onLanguageSelected={handleSourceLanguage} 
                         languageCode={sourceLanguage}
                         textValue={textToBeTranslated}
+                        handleSpeech={utterText}
                     />
                     <img 
                         onClick={handleSwap}
@@ -96,6 +106,7 @@ function Translator() {
                     />
                     <TranslatorBox 
                         textValue={translatedText} 
+                        handleSpeech={utterText}
                         onLanguageSelected={handleDestinationLanguage} 
                         languageCode={destinationLanguage}
                     />
