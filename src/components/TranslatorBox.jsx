@@ -1,20 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Speaker from '../assets/speaker-wave.svg'
 import languages from '../helpers/languages';
 
 
 function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected , languageCode}) {
 
-    const [langaugeSelected, setLanguageSelected] = useState(languageCode ?? 'en-GB');
 
     function handleTextChange(event) {
         onChange?.(event.target.value);
     }
 
     function handleLanguageChange(event) {
-        setLanguageSelected(event.target.value);
         onLanguageSelected?.(event.target.value);
     }
+
 
     return (
         <>
@@ -38,7 +37,7 @@ function TranslatorBox({ textValue, placeholder, onChange, onLanguageSelected , 
                         />
                         <select
                             name="language"
-                            value={langaugeSelected}
+                            value={languageCode ?? 'en-GB'}
                             onChange={handleLanguageChange}
                             className="w-full p-1 border border-gray-200 outline-gray-500"
                         >

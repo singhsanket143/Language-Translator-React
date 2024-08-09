@@ -50,6 +50,17 @@ function Translator() {
         
     }
 
+    function handleSwap() {
+        const tempLanguage = sourceLanguage; // input language
+        const tempText = textToBeTranslated; // input text
+
+        setSourceLanguage(destinationLanguage);
+        setDestinationLanguage(tempLanguage);
+
+        setTextToBeTranslated(translatedText);
+        setTranslatedText(tempText);
+    }
+
     function handleSourceLanguage(language) {
         setSourceLanguage(language);
     }
@@ -69,8 +80,10 @@ function Translator() {
                         onChange={updatedTextToBeTransLated} 
                         onLanguageSelected={handleSourceLanguage} 
                         languageCode={sourceLanguage}
+                        textValue={textToBeTranslated}
                     />
                     <img 
+                        onClick={handleSwap}
                         src={SwapIcon}
                         alt="Swap icon"
                         className="my-auto cursor-pointer"
